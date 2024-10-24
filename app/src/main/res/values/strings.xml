@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyProjects</string>
+    <string name="carousel_image_1_description">Flores</string>
+    <string name="carousel_image_2_description">Flores</string>
+    <string name="carousel_image_3_description">Bosque</string>
+    <string name="carousel_image_4_description">Desierto</string>
+    <string name="carousel_image_5_description">Riachuelo</string>
+    <string name="carousel_image_6_description">Colinas</string>
+    <string name="carousel_image_7_description">Tucán</string>
+    <string name="carousel_image_8_description">Tortugas</string>
+</resources>
