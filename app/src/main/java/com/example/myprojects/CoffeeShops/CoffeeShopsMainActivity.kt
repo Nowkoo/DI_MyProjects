@@ -34,80 +34,78 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
-class MainActivity : ComponentActivity() {
-    @Composable
-    @OptIn(ExperimentalMaterial3Api::class)
-    fun CoffeeShopMainActivity() {
-        Scaffold(
-            modifier = Modifier.fillMaxSize(),
-            topBar = {
-                CreateTopApp()
-            }
-        ) { innerPadding ->
-            val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = "Shops") {
-                composable("Shops") {Shops(navController, Modifier.padding(innerPadding))}
-                composable(
-                    "ShopProfile/{shopName}",
-                    arguments = listOf(navArgument("shopName") { type = NavType.StringType })
-                ) { backStackEntry ->
-                    ShopProfile(backStackEntry.arguments?.getString("shopName"), Modifier.padding(innerPadding))
-                }
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+fun CoffeeShopsMainActivity() {
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CreateTopApp()
+        }
+    ) { innerPadding ->
+        val navController = rememberNavController()
+        NavHost(navController = navController, startDestination = "Shops") {
+            composable("Shops") {Shops(navController, Modifier.padding(innerPadding))}
+            composable(
+                "ShopProfile/{shopName}",
+                arguments = listOf(navArgument("shopName") { type = NavType.StringType })
+            ) { backStackEntry ->
+                ShopProfile(backStackEntry.arguments?.getString("shopName"), Modifier.padding(innerPadding))
             }
         }
     }
+}
 
-    @Composable
-    @OptIn(ExperimentalMaterial3Api::class)
-    private fun CreateTopApp() {
-        var showMenu by remember { mutableStateOf(false) }
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun CreateTopApp() {
+    var showMenu by remember { mutableStateOf(false) }
 
-        TopAppBar(
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                titleContentColor = MaterialTheme.colorScheme.primary
-            ),
-            title = {
-                Text(
-                    "CoffeeShops",
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(PaddingValues(start = 20.dp))
+    TopAppBar(
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            titleContentColor = MaterialTheme.colorScheme.primary
+        ),
+        title = {
+            Text(
+                "CoffeeShops",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(PaddingValues(start = 20.dp))
+            )
+        },
+        navigationIcon = {
+            IconButton(onClick = { /* do something */ }) {
+                Icon(
+                    imageVector = Icons.Filled.Menu,
+                    contentDescription = "Localized description"
                 )
-            },
-            navigationIcon = {
-                IconButton(onClick = { /* do something */ }) {
-                    Icon(
-                        imageVector = Icons.Filled.Menu,
-                        contentDescription = "Localized description"
-                    )
-                }
-            },
-            actions = {
-
-                IconButton(onClick = { showMenu = !showMenu }) {
-                    Icon(
-                        imageVector = Icons.Filled.MoreVert,
-                        contentDescription = "Localized description"
-                    )
-                }
-                DropdownMenu(
-                    expanded = showMenu,
-                    onDismissRequest = {showMenu = false}
-                ) {
-                    DropdownMenuItem(
-                        text = { Text("Compartir") },
-                        onClick = {  },
-                        leadingIcon = { Icon(Icons.Filled.Share, contentDescription = null) }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Guardar") },
-                        onClick = {  },
-                        leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null) },
-                    )
-                }
             }
-        )
-    }
+        },
+        actions = {
+
+            IconButton(onClick = { showMenu = !showMenu }) {
+                Icon(
+                    imageVector = Icons.Filled.MoreVert,
+                    contentDescription = "Localized description"
+                )
+            }
+            DropdownMenu(
+                expanded = showMenu,
+                onDismissRequest = {showMenu = false}
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Compartir") },
+                    onClick = {  },
+                    leadingIcon = { Icon(Icons.Filled.Share, contentDescription = null) }
+                )
+                DropdownMenuItem(
+                    text = { Text("Guardar") },
+                    onClick = {  },
+                    leadingIcon = { Icon(Icons.Filled.Lock, contentDescription = null) },
+                )
+            }
+        }
+    )
 }

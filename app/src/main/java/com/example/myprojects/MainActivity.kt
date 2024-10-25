@@ -29,6 +29,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.di_p1_myphotoscarousel.MyPhotosMainActivity
+import com.example.myprojects.CoffeeShops.CoffeeShopsMainActivity
 import com.example.myprojects.ElSol.ElSolMainActivity
 import com.example.myprojects.ui.theme.MyProjectsTheme
 
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
                 ) { innerPadding ->
                     NavHost(navController = navController, startDestination = "MyProjectsInicio") {
                         composable("MyProjectsInicio") { MyProjectsInicio(Modifier.padding(innerPadding))}
+                        composable("CoffeeShopsMainActivity") { CoffeeShopsMainActivity()}
                         composable("MyPhotosMainActivity") { MyPhotosMainActivity()}
                         composable("ElSolMainActivity") { ElSolMainActivity()}
                     }
