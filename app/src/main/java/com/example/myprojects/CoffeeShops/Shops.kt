@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.myprojects.R
+import com.example.myprojects.ui.theme.titulo
 
 data class Shop (
     var nombre: String,
@@ -79,7 +80,7 @@ fun ItemShop(shop: Shop, navController: NavHostController) {
         ) {
             Text(
                 text = shop.nombre,
-//                fontFamily = titulo,
+                fontFamily = titulo,
                 fontSize = 30.sp,
             )
 

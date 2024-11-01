@@ -9,7 +9,10 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowInsetsControllerCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -36,8 +39,9 @@ private val LightColorScheme = lightColorScheme(
 @Composable
 fun MyProjectsTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    //PONER DYNAMIC COLOR A FALSE!!
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -49,6 +53,18 @@ fun MyProjectsTheme(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
+
+
+    //STATUS BAR!!!
+    //Cambia el color de fondo de la status bar
+    val view = LocalView.current
+    val window =
+        (view.context as Activity).window
+    window.statusBarColor = Purple40.toArgb()
+
+    //Pone símbolos de la status bar en blanco
+    WindowInsetsControllerCompat(window, view).isAppearanceLightStatusBars = false
+
 
     MaterialTheme(
         colorScheme = colorScheme,

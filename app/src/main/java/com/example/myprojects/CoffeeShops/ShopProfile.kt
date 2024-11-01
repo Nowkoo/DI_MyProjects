@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.myprojects.ui.theme.titulo
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +62,7 @@ fun ShopProfile(string: String?, modifier: Modifier) {
 
         Text(
             text = shop.nombre,
-//            fontFamily = titulo,
+            fontFamily = titulo,
             fontSize = 30.sp,
             textAlign = TextAlign.Center
         )
