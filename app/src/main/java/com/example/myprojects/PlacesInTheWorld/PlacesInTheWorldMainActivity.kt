@@ -1,5 +1,6 @@
 package com.example.placesintheworld
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
@@ -50,11 +52,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.myprojects.R
 
 data class Place (
     var nombre: String,
     @DrawableRes var foto: Int
+)
+
+data class PlaceCoil (
+    var nombre: String,
+    var url: String
 )
 
 @Composable
@@ -67,6 +76,7 @@ fun PlacesInTheWorldMainActivity() {
         NavHost(navController = navController, startDestination = "PantallaInicial") {
             composable("PantallaInicial") { PantallaInicial(Modifier.padding(innerPadding), navController)}
             composable("LazyColumnVista") { LazyColumnVista(Modifier.padding(innerPadding), navController)}
+
             composable(
                 "About/{place}/{foto}",
                 arguments = listOf(
@@ -77,6 +87,23 @@ fun PlacesInTheWorldMainActivity() {
                 About(
                     backStackEntry.arguments?.getString("place"),
                     backStackEntry.arguments?.getInt("foto"),
+                    Modifier.padding(innerPadding)
+                )
+            }
+
+            composable("PantallaInicialCoil") { PantallaInicialCoil(Modifier.padding(innerPadding), navController)}
+            composable("LazyColumnVistaCoil") { LazyColumnVistaCoil(Modifier.padding(innerPadding), navController)}
+
+            composable(
+                "AboutCoil/{place}/{url}",
+                arguments = listOf(
+                    navArgument("place") { type = NavType.StringType },
+                    navArgument("url") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                AboutCoil(
+                    backStackEntry.arguments?.getString("place"),
+                    backStackEntry.arguments?.getString("url"),
                     Modifier.padding(innerPadding)
                 )
             }
@@ -147,6 +174,16 @@ fun CreateTopAppBar(navController: NavController) {
                     onClick = { navController.navigate("PantallaInicial") },
                     leadingIcon = { Icon(Icons.Filled.Home, contentDescription = null) },
                 )
+                DropdownMenuItem(
+                    text = { Text("LazyColumnCoil") },
+                    onClick = { navController.navigate("LazyColumnVistaCoil") },
+                    leadingIcon = { Icon(Icons.Filled.Face, contentDescription = null) }
+                )
+                DropdownMenuItem(
+                    text = { Text("StaggeredGridCoil") },
+                    onClick = { navController.navigate("PantallaInicialCoil") },
+                    leadingIcon = { Icon(Icons.Filled.Home, contentDescription = null) },
+                )
             }
         }
     )
@@ -166,6 +203,20 @@ fun getPlaces(): List<Place> {
     )
 }
 
+fun getPlacesCoil(): List<PlaceCoil> {
+    return listOf(
+        PlaceCoil("Morella", "https://media.traveler.es/photos/613762aa06df43bef2d3016a/16:9/w_2560%2Cc_limit/195207.jpg"),
+        PlaceCoil("Playa Algarve", "https://www.algarveriders.com/es/docimg/1255/sd"),
+        PlaceCoil("Maldivas", "https://blackpepper.travel/cache/2024-01/blackpepper-viajes-maldivas-0003-galeria-2x-1008x671.jpg"),
+        PlaceCoil("Machu Pichu", "https://viajes.nationalgeographic.com.es/medio/2018/03/01/machu-picchu_5ff969ae_1280x720.jpg"),
+        PlaceCoil("Gran Muralla China", "https://hips.hearstapps.com/hmg-prod/images/william-olivieri-hwy9r6-yzgm-unsplash-1646657593.jpg?crop=0.666xw:1.00xh;0.0365xw,0&resize=1120:*"),
+        PlaceCoil("Alhambra", "https://www.dosde.com/discover/wp-content/uploads/2017/02/alhambra-de-granada-dosde-publishing.jpg"),
+        PlaceCoil("Atenas", "https://cdn-imgix.headout.com/blog-content/image/d2cfb372cf3a129c5ee7d6d3945d0580-AdobeStock_129050920%20copy.jpg?auto=format&w=695.0400000000001&h=434.4&q=120&crop=faces&fit=crop"),
+        PlaceCoil("Pirámide Kukulkan", "https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Chichen_Itza_3.jpg/1600px-Chichen_Itza_3.jpg"),
+        PlaceCoil("Punta Cana", "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Playa_Bavaro.JPG/2560px-Playa_Bavaro.JPG")
+    )
+}
+
 @Composable
 fun ItemPlace(place: Place, navController: NavController) {
     Box(
@@ -175,6 +226,44 @@ fun ItemPlace(place: Place, navController: NavController) {
     ) {
         Image(
             painter = painterResource(place.foto),
+            contentDescription = place.nombre,
+            Modifier
+                .fillMaxWidth(),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.Black.copy(alpha = 0.3f))
+                .align(Alignment.TopStart)
+                .padding(8.dp)
+        ) {
+            Text(
+                text = place.nombre,
+                color = Color.White,
+                fontSize = 22.sp,
+                textDecoration = TextDecoration.Underline,
+                modifier = Modifier.padding(5.dp)
+            )
+        }
+    }
+}
+
+@Composable
+fun ItemPlaceCoil(place: PlaceCoil, navController: NavController) {
+    Box(
+        Modifier
+            .clickable {
+                val encodedUrl = Uri.encode(place.url)
+                navController.navigate("AboutCoil/${place.nombre}/$encodedUrl")
+            }
+            .padding(2.dp)
+    ) {
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(place.url)
+                .build(),
             contentDescription = place.nombre,
             Modifier
                 .fillMaxWidth(),

@@ -19,3 +19,14 @@ fun LazyColumnVista(modifier: Modifier, navController: NavController) {
         }
     }
 }
+
+@Composable
+fun LazyColumnVistaCoil(modifier: Modifier, navController: NavController) {
+    LazyColumn (
+        modifier.fillMaxWidth().padding(2.dp)
+    ) {
+        items(getPlacesCoil()) { place ->
+            ItemPlaceCoil(place, navController)
+        }
+    }
+}

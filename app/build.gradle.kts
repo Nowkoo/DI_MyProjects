@@ -67,4 +67,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    //Librería para usar coil y dar permiso a Internet desde manifest
+    implementation("io.coil-kt:coil-compose:2.4.0")
 }

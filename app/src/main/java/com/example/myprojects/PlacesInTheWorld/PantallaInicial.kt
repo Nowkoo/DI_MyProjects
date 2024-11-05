@@ -21,3 +21,16 @@ fun PantallaInicial(modifier: Modifier = Modifier, navController: NavController)
         }
     )
 }
+
+@Composable
+fun PantallaInicialCoil(modifier: Modifier = Modifier, navController: NavController) {
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        modifier = modifier.fillMaxWidth().padding(2.dp),
+        content = {
+            items(getPlacesCoil().size) { index ->
+                ItemPlaceCoil(getPlacesCoil().get(index), navController)
+            }
+        }
+    )
+}
