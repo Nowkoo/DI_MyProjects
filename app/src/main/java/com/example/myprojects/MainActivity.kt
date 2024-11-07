@@ -39,7 +39,7 @@ import com.example.myprojects.ui.theme.MyProjectsTheme
 import com.example.p1_juegos.PlayJuegosMainActivity
 import com.example.placesintheworld.PlacesInTheWorldMainActivity
 
-val items = listOf("MyPhotos", "CoffeeShops", "ElSol", "PlayJuegos", "PlacesInTheWorld")
+val items = listOf("Photos", "Coffee", "Sol", "Juegos", "Places")
 val selectedIcons = listOf(Icons.Filled.AccountBox, Icons.Filled.Favorite, Icons.Filled.Face, Icons.Filled.PlayArrow, Icons.Filled.Place)
 val unselectedIcons = listOf(Icons.Outlined.AccountBox, Icons.Outlined.Favorite, Icons.Outlined.Face, Icons.Outlined.PlayArrow, Icons.Outlined.Place)
 
